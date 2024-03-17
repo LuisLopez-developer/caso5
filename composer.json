@@ -1,0 +1,20 @@
+{
+    "name": "luislopez/caso5",
+    "type": "project",
+    "require": {
+        "composer": "^2.2",
+        "phpmailer/phpmailer": "^6.9"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Luislopez\\Caso5\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "LuisLopez-developer",
+            "email": "luislopezhuari27@gmail.com"
+        }
+    ]
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de contacto</title>
+    <script>
+        function enviarFormulario() {
+            var nombre = document.getElementById('nombre').value;
+            var email = document.getElementById('email').value;
+            var mensaje = document.getElementById('mensaje').value;
+
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        var respuesta = JSON.parse(xhr.responseText);
+                        if (respuesta.success) {
+                            document.getElementById('resultado').innerHTML = respuesta.message;
+                        } else {
+                            document.getElementById('resultado').innerHTML = respuesta.message;
+                        }
+                    } else {
+                        document.getElementById('resultado').innerHTML = 'Error al enviar el formulario.';
+                    }
+                }
+            };
+            xhr.open('POST', 'controllers/contact.php', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.send('nombre=' + encodeURIComponent(nombre) + '&email=' + encodeURIComponent(email) + '&mensaje=' + encodeURIComponent(mensaje));
+        }
+    </script>
+</head>
+
+<body>
+    <h2>Formulario de contacto</h2>
+    <form>
+        Nombre: <input type="text" id="nombre"><br>
+        Email: <input type="email" id="email"><br>
+        Mensaje: <textarea id="mensaje" rows="4" cols="50"></textarea><br>
+        <input type="button" value="Enviar" onclick="enviarFormulario()">
+    </form>
+    <div id="resultado"></div>
+</body>
+
+</html>
