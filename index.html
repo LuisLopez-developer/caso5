@@ -9,6 +9,7 @@
         function enviarFormulario() {
             var nombre = document.getElementById('nombre').value;
             var email = document.getElementById('email').value;
+            var asunto = document.getElementById('asunto').value;
             var mensaje = document.getElementById('mensaje').value;
 
             var xhr = new XMLHttpRequest();
@@ -28,7 +29,7 @@
             };
             xhr.open('POST', 'controllers/contact.php', true);
             xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            xhr.send('nombre=' + encodeURIComponent(nombre) + '&email=' + encodeURIComponent(email) + '&mensaje=' + encodeURIComponent(mensaje));
+            xhr.send('nombre=' + encodeURIComponent(nombre) + '&email=' + encodeURIComponent(email) + '&asunto=' + encodeURIComponent(asunto) + '&mensaje=' + encodeURIComponent(mensaje));
         }
     </script>
 </head>
@@ -36,10 +37,31 @@
 <body>
     <h2>Formulario de contacto</h2>
     <form>
-        Nombre: <input type="text" id="nombre"><br>
-        Email: <input type="email" id="email"><br>
-        Mensaje: <textarea id="mensaje" rows="4" cols="50"></textarea><br>
-        <input type="button" value="Enviar" onclick="enviarFormulario()">
+        <fieldset>
+            <legend>Informacion personal</legend>
+            <label>Nombre:
+                <input type="text" id="nombre" placeholder="Luis Angel Lopez" required />
+            </label>
+            <label>Email:
+                <input type="email" id="email" placeholder="ejemplo@email.com" required />
+            </label>
+        </fieldset>
+
+        <fieldset>
+            <legend>Asunto</legend>
+            <label>Asunto:
+                <input type='text' id="asunto" placeholder="Escriba el asunto" required />
+            </label>
+        </fieldset>
+
+        <fieldset>
+            <legend>Informacion adicional</legend>
+            <label>Mensaje:
+                <textarea id="mensaje" placeholder="Escriba su consulta u opinion." required></textarea>
+            </label>
+        </fieldset>
+
+        <button type="button" onclick="enviarFormulario()">Enviar</button>
     </form>
     <div id="resultado"></div>
 </body>
