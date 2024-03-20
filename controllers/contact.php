@@ -16,7 +16,8 @@ function enviarCorreo($nombre, $email, $asunto, $mensaje) {
 
         $mail->setFrom($email, $nombre);
         $mail->addAddress('support@teamstarteight.work');
-
+        $mail->addAddress($email); // Agregar la dirección de correo electrónico del remitente
+        
         $mail->isHTML(true);
         $mail->Subject = $asunto;
         $mail->Body = 'Nombre: ' . $nombre . '<br>Email: ' . $email . '<br>Asunto: ' . $asunto . '<br>Mensaje: ' . $mensaje;

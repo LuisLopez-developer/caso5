@@ -32,38 +32,44 @@
             xhr.send('nombre=' + encodeURIComponent(nombre) + '&email=' + encodeURIComponent(email) + '&asunto=' + encodeURIComponent(asunto) + '&mensaje=' + encodeURIComponent(mensaje));
         }
     </script>
+    <link rel="stylesheet" href="src/styles/styles.css">
 </head>
 
 <body>
-    <h2>Formulario de contacto</h2>
-    <form>
-        <fieldset>
-            <legend>Informacion personal</legend>
-            <label>Nombre:
-                <input type="text" id="nombre" placeholder="Luis Angel Lopez" required />
-            </label>
-            <label>Email:
-                <input type="email" id="email" placeholder="ejemplo@email.com" required />
-            </label>
-        </fieldset>
+    <main>
+        <section>
+            <div class="container">
+                <aside>
+                    <h2>Contacto</h2>
+                    <p>¿Tiene preguntas o desea contactanos? Siéntase libre de contactar con nosotros.</p>
+                </aside>
+                <div class="form-container">
 
-        <fieldset>
-            <legend>Asunto</legend>
-            <label>Asunto:
-                <input type='text' id="asunto" placeholder="Escriba el asunto" required />
-            </label>
-        </fieldset>
+                </div>
+                <form>
+                    <h3>Formulario de contacto</h3>
+                    <fieldset class="campo">
 
-        <fieldset>
-            <legend>Informacion adicional</legend>
-            <label>Mensaje:
-                <textarea id="mensaje" placeholder="Escriba su consulta u opinion." required></textarea>
-            </label>
-        </fieldset>
+                        <input for="nombre" type="text" id="nombre" placeholder="Luis Angel Lopez" required />
 
-        <button type="button" onclick="enviarFormulario()">Enviar</button>
-    </form>
-    <div id="resultado"></div>
+                    </fieldset>
+                    <fieldset class="campo">
+                        <input for="email" type="email" id="email" placeholder="ejemplo@email.com" required />
+
+                    </fieldset>
+                    <fieldset class="campo">
+                        <input for="asunto" type="text" id="asunto" placeholder="Escriba el asunto" required />
+                    </fieldset>
+                    <fieldset class="campo">
+                        <textarea for="mensaje" id="mensaje" placeholder="Escriba su consulta u opinión."
+                            required></textarea>
+                    </fieldset>
+                    <button type="button" onclick="enviarFormulario()">Enviar</button>
+                    <div id="resultado"></div>
+                </form>
+            </div>
+        </section>
+    </main>
 </body>
 
 </html>
