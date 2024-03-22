@@ -10,22 +10,24 @@ function enviarCorreo($nombre, $email, $asunto, $mensaje) {
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
         $mail->Username = 'teamstarteight@gmail.com';
-        $mail->Password = 'cxpzorvpykovqoci';
+        $mail->Password = 'hcpznfunkktgwbcz';
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
         $mail->setFrom($email, $nombre);
-        $mail->addAddress('support@teamstarteight.work');
         $mail->addAddress($email); // Agregar la dirección de correo electrónico del remitente
-        
+
         $mail->isHTML(true);
         $mail->Subject = $asunto;
         $mail->Body = 'Nombre: ' . $nombre . '<br>Email: ' . $email . '<br>Asunto: ' . $asunto . '<br>Mensaje: ' . $mensaje;
 
+        $mail->SMTPOptions = array('ssl' => array('verify_peer' => false, 'verify_peer_name' => false, 'allow_self_signed' => true));
+
         $mail->send();
         return true;
     } catch (Exception $e) {
-        return false;
+        // Devuelve el mensaje de error
+        return $mail->ErrorInfo;
     }
 }
 
@@ -37,12 +39,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $respuesta = array();
 
-    if (enviarCorreo($nombre, $email, $asunto, $mensaje)) {
+    $resultadoEnvio = enviarCorreo($nombre, $email, $asunto, $mensaje);
+
+    if ($resultadoEnvio === true) {
         $respuesta['success'] = true;
         $respuesta['message'] = 'Mensaje enviado correctamente';
     } else {
         $respuesta['success'] = false;
-        $respuesta['message'] = 'Error al enviar el mensaje';
+        $respuesta['message'] = 'Error al enviar el mensaje: ' . $resultadoEnvio;
     }
 
     header('Content-Type: application/json');
