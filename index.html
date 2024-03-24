@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de contacto</title>
+    <!-- Agrega los estilos CSS -->
+    <link rel="stylesheet" href="node_modules/sweetalert2/dist/sweetalert2.min.css">
+    <!-- Agrega el archivo JS -->
+    <script src="node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
+
     <script>
         function enviarFormulario() {
             var nombre = document.getElementById('nombre').value;
@@ -12,24 +17,30 @@
             var asunto = document.getElementById('asunto').value;
             var mensaje = document.getElementById('mensaje').value;
 
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        var respuesta = JSON.parse(xhr.responseText);
-                        if (respuesta.success) {
-                            document.getElementById('resultado').innerHTML = respuesta.message;
-                        } else {
-                            document.getElementById('resultado').innerHTML = respuesta.message;
-                        }
+            // Crear objeto FormData con los datos
+            var formData = new FormData();
+            formData.append('nombre', nombre);
+            formData.append('email', email);
+            formData.append('asunto', asunto);
+            formData.append('mensaje', mensaje);
+
+            // Realizar la petición AJAX
+            fetch('controllers/contact.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire('Éxito', data.message, 'success'); // Mostrar mensaje de éxito (SweetAlert2)
                     } else {
-                        document.getElementById('resultado').innerHTML = 'Error al enviar el formulario.';
+                        Swal.fire('Error', data.message, 'error'); // Mostrar mensaje de error (SweetAlert2)
                     }
-                }
-            };
-            xhr.open('POST', 'controllers/contact.php', true);
-            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            xhr.send('nombre=' + encodeURIComponent(nombre) + '&email=' + encodeURIComponent(email) + '&asunto=' + encodeURIComponent(asunto) + '&mensaje=' + encodeURIComponent(mensaje));
+                })
+                .catch(error => {
+                    console.error('Error al enviar el formulario:', error);
+                    Swal.fire('Error', 'Error al enviar el formulario.', 'error'); // Mostrar mensaje de error (SweetAlert2)
+                });
         }
     </script>
     <link rel="stylesheet" href="src/styles/styles.css">
@@ -41,7 +52,7 @@
             <div class="container">
                 <aside>
                     <h2>Contacto</h2>
-                    <p>¿Tiene preguntas o desea contactanos? Siéntase libre de contactar con nosotros?.</p>
+                    <p>¿Tiene preguntas o desea contactanos? Siéntase libre de contactar con nosotros.</p>
                 </aside>
                 <div class="form-container">
 
